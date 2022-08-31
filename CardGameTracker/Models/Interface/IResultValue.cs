@@ -7,6 +7,6 @@
         int ResultOptionId { get; set; }
         
         IRoundResult RoundResult { get; set; }
-        IResultOption ResulutOption { get; set; }
+        IResultOption ResultOption { get; set; }
     }
 }

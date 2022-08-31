@@ -7,7 +7,24 @@ namespace CardGameTracker.Models.Poco
         public int ResultValueId { get; set; }
         public int RoundResultId { get; set; }
         public int ResultOptionId { get; set; }
-        public IRoundResult RoundResult { get; set; }
-        public IResultOption ResulutOption { get; set; }
+
+        private IRoundResult roundResult;
+        public IRoundResult RoundResult
+        {
+            get => roundResult;
+            set{
+                roundResult = value;
+                RoundResultId = roundResult.RoundResultId;
+            }
+        }
+
+        private IResultOption resultOption;
+        public IResultOption ResultOption{
+            get => resultOption;
+            set{
+                resultOption = value;
+                ResultOptionId = resultOption.ResultOptionId;
+            }
+        }
     }
 }
