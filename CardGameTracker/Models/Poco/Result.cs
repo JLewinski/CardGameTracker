@@ -2,7 +2,7 @@
 
 namespace CardGameTracker.Models.Poco
 {
-    public class ResultValuePoco : IResultValue
+    public class ResultPoco : IResult
     {
         public int ResultValueId { get; set; }
         public int RoundResultId { get; set; }

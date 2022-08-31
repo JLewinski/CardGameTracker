@@ -29,7 +29,7 @@ namespace CardGameTracker.Services.DataServices
         Task<bool> SaveAsync(IPlayer player);
         bool Save(IRoundResult roundResult);
         Task<bool> SaveAsync(IRoundResult roundResult);
-        bool Save(IResultValue roundValue);
-        Task<bool> SaveAsync(IResultValue roundValue);
+        bool Save(IResult roundValue);
+        Task<bool> SaveAsync(IResult roundValue);
     }
 }

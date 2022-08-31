@@ -28,5 +28,7 @@ namespace CardGameTracker.Models.Poco
                 PlayerId = player.PlayerId;
             }
         }
+
+        public IEnumerable<IResult> ResultValues { get; set; }
     }
 }

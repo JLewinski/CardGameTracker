@@ -7,6 +7,7 @@ namespace CardGameTracker.Models.Poco
         public int ResultOptionId { get; set; }
         public int GameId { get; set; }
         public string Name { get; set; }
+        public ResultType ResultType { get; set; }
         private IGame game;
         public IGame Game
         {

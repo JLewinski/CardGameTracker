@@ -18,6 +18,18 @@ namespace CardGameTracker.Models.Poco
         public IEnumerable<IPlayer> Players { get; set; }
         public IEnumerable<IResultOption> ResultOptions { get; set; }
         public IEnumerable<IRound> Rounds { get; set; }
+
+        public void AddCreatedRound(IRound round)
+        {
+            if (Rounds is ICollection<IRound> rounds)
+            {
+                rounds.Add(round);
+            }
+            else
+            {
+                Rounds = Rounds.Append(round);
+            }
+        }
     }
 
     public class GameDisplay

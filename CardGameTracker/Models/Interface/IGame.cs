@@ -18,5 +18,7 @@ namespace CardGameTracker.Models.Interface
         IEnumerable<IPlayer> Players { get; set; }
         IEnumerable<IResultOption> ResultOptions { get; set; }
         IEnumerable<IRound> Rounds { get; set; }
+
+        void AddCreatedRound(IRound round);
     }
 }
