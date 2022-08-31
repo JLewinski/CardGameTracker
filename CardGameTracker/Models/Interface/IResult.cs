@@ -7,6 +7,7 @@ namespace CardGameTracker.Models.Interface
         int ResultValueId { get; set; }
         int RoundResultId { get; set; }
         int ResultOptionId { get; set; }
+        string ResultValue { get; set; }
 
         [JsonIgnore]
         IRoundResult RoundResult { get; set; }
