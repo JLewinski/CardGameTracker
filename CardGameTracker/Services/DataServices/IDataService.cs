@@ -12,8 +12,13 @@ namespace CardGameTracker.Services.DataServices
     {
         List<GameDisplay> GetGameList(int startIndex = 0, int endIndex = 0, string? name = null, bool? isFinished = null, DateTime? startDate = null, DateTime? endDate = null);
         IGame GetGame(int id);
+        Task<IGame> GetGameAsync(int id);
         IRound GetRound(int id);
+        Task<IRound> GetRoundAsync(int id);
         IRound GetRound(int gameId, int roundNumber);
+        Task<IRound> GetRoundAsync(int gameId, int roundNumber);
+        IPlayer GetPlayer(int id);
+        Task<IPlayer> GetPlayerAsync(int id);
         bool Insert(IRound round);
         Task<bool> InsertAsync(IRound round);
         bool Save(IRound round);
