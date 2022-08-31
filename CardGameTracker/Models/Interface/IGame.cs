@@ -13,6 +13,7 @@ namespace CardGameTracker.Models.Interface
         DateTime Created { get; set; }
         DateTime Updated { get; set; }
         DateTime? Deleted { get; set; }
+        bool IsFinished { get; set; }
 
         IEnumerable<IPlayer> Players { get; set; }
         IEnumerable<IResultOption> ResultOptions { get; set; }

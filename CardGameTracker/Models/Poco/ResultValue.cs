@@ -12,16 +12,19 @@ namespace CardGameTracker.Models.Poco
         public IRoundResult RoundResult
         {
             get => roundResult;
-            set{
+            set
+            {
                 roundResult = value;
                 RoundResultId = roundResult.RoundResultId;
             }
         }
 
         private IResultOption resultOption;
-        public IResultOption ResultOption{
+        public IResultOption ResultOption
+        {
             get => resultOption;
-            set{
+            set
+            {
                 resultOption = value;
                 ResultOptionId = resultOption.ResultOptionId;
             }

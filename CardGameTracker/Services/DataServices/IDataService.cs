@@ -10,6 +10,10 @@ namespace CardGameTracker.Services.DataServices
 {
     public interface IDataService
     {
+        List<GameDisplay> GetGameList(int startIndex = 0, int endIndex = 0, string? name = null, bool? isFinished = null, DateTime? startDate = null, DateTime? endDate = null);
+        IGame GetGame(int id);
+        IRound GetRound(int id);
+        IRound GetRound(int gameId, int roundNumber);
         bool Insert(IRound round);
         Task<bool> InsertAsync(IRound round);
         bool Save(IRound round);

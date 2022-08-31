@@ -30,7 +30,7 @@ namespace CardGameTracker.Services.GameServices
 
         public async Task<IRound> CreateRound(IGame game)
         {
-            var lastRoundNumber = game.Rounds.Any () ? game.Rounds.Max(x => x.RoundNumber) : 0;
+            var lastRoundNumber = game.Rounds.Any() ? game.Rounds.Max(x => x.RoundNumber) : 0;
             var round = new RoundPoco
             {
                 Game = game,
