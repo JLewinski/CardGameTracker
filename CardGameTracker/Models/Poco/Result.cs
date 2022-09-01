@@ -2,12 +2,11 @@
 
 namespace CardGameTracker.Models.Poco
 {
-    public class ResultPoco : IResult
+    public abstract class ResultPoco : ResultBase, IResult
     {
         public int ResultValueId { get; set; }
         public int RoundResultId { get; set; }
         public int ResultOptionId { get; set; }
-        public string ResultValue { get; set; }
 
         private IRoundResult roundResult;
         public IRoundResult RoundResult
@@ -21,7 +20,7 @@ namespace CardGameTracker.Models.Poco
         }
 
         private IResultOption resultOption;
-        public IResultOption ResultOption
+        public override IResultOption ResultOption
         {
             get => resultOption;
             set
@@ -30,5 +29,8 @@ namespace CardGameTracker.Models.Poco
                 ResultOptionId = resultOption.ResultOptionId;
             }
         }
+
+
     }
+
 }

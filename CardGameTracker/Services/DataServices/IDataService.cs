@@ -11,6 +11,12 @@ namespace CardGameTracker.Services.DataServices
     public interface IDataService
     {
         List<GameDisplay> GetGameList(int startIndex = 0, int endIndex = 0, string? name = null, bool? isFinished = null, DateTime? startDate = null, DateTime? endDate = null);
+        
+        /// <summary>
+        /// Gets the game and all its players, rounds, options, etc
+        /// </summary>
+        /// <param name="id">The id of the game</param>
+        /// <returns></returns>
         IGame GetGame(int id);
         Task<IGame> GetGameAsync(int id);
         IRound GetRound(int id);

@@ -13,7 +13,7 @@ namespace CardGameTracker.Services.GameServices
     {
         (bool success, IEnumerable<string> errors) Validate(IGame game);
         (bool success, IEnumerable<string> errors) Validate(IRound round);
-        IRound CreateRound(IGame game);
+        Task<IRound> CreateRound(IGame game);
 
     }
 
