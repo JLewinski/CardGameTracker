@@ -38,6 +38,11 @@ namespace CardGameTracker.Models.Interface
             ResultType.DOUBLE => double.TryParse(ResultValue, out double dval) ? dval : 0,
             ResultType.INT => int.TryParse(ResultValue, out var ival) ? ival : 0,
             ResultType.STRING => ResultValue,
+            ResultType.SELECTION =>
+                int.TryParse(ResultValue, out var ival) ?
+                    ResultOption?.ResultOptionalValues.First(x => x.Index == ival).OptionalValue ??
+                        throw new NullReferenceException("Value was null") :
+                    throw new NullReferenceException("Index of value was not a number."),
             _ => throw new ArgumentOutOfRangeException(nameof(ResultOption), $"Not expected enum value: {ResultOption?.ResultType}")
         };
 

@@ -18,5 +18,7 @@ namespace CardGameTracker.Models.Poco
                 GameId = game.GameId;
             }
         }
+
+        public IEnumerable<IResultOptionalValues> ResultOptionalValues { get; set; }
     }
 }

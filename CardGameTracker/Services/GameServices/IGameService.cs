@@ -11,8 +11,8 @@ namespace CardGameTracker.Services.GameServices
 {
     public interface IGameService
     {
-        (bool success, IEnumerable<string> errors) Validate(IGame game);
-        (bool success, IEnumerable<string> errors) Validate(IRound round);
+        (bool success, IEnumerable<int> errorCodes) Validate(IGame game);
+        (bool success, IEnumerable<int> errorCodes) Validate(IRound round);
         Task<IRound> CreateRound(IGame game);
 
     }

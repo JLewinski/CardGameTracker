@@ -6,9 +6,10 @@ namespace CardGameTracker.Models.Interface
     {
         STRING,
         INT,
-        DOUBLE
+        DOUBLE,
+        SELECTION
     }
-    
+
     public interface IResultOption
     {
         int ResultOptionId { get; set; }
@@ -18,5 +19,18 @@ namespace CardGameTracker.Models.Interface
 
         [JsonIgnore]
         IGame Game { get; set; }
+
+        IEnumerable<IResultOptionalValues> ResultOptionalValues { get; set; }
+
+    }
+
+    public interface IResultOptionalValues
+    {
+        int ResultOptionId { get; set; }
+        string OptionalValue { get; set; }
+        int Index { get; set; }
+
+        [JsonIgnore]
+        IResultOption ResultOption { get; set; }
     }
 }
