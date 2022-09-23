@@ -9,12 +9,23 @@ using System.Threading.Tasks;
 
 namespace CardGameTracker.Services.GameServices
 {
+    public enum CardSuits
+    {
+        Clubs,
+        Diamonds,
+        Spades,
+        Hearts,
+        NA
+    }
     public interface IGameService
     {
+        // Task<IGame> CreateGame();
         (bool success, IEnumerable<int> errorCodes) Validate(IGame game);
         (bool success, IEnumerable<int> errorCodes) Validate(IRound round);
         Task<IRound> CreateRound(IGame game);
+        bool IsGameComplete(IGame game);
 
+        Dictionary<int, IEnumerable<PlayerValue>> GetPlayerValues(IGame game);
     }
 
     public abstract class GameServiceBase
@@ -26,7 +37,7 @@ namespace CardGameTracker.Services.GameServices
             _dataService = dataService;
         }
 
-        protected abstract Task<bool> CreateRoundOptions(IRound round);
+        protected abstract Task<bool> CreateRoundOptions(IRound round, IGame game);
 
         public async Task<IRound> CreateRound(IGame game)
         {
@@ -37,8 +48,23 @@ namespace CardGameTracker.Services.GameServices
                 RoundNumber = lastRoundNumber + 1
             };
             await _dataService.InsertAsync(round);
-            var success = await CreateRoundOptions(round);
+            var success = await CreateRoundOptions(round, game);
             return round;
         }
+
+        
+    }
+
+    public abstract class PlayerValue
+    {
+        public IPlayer Player { get; set; }
+        public string Title { get; set; }
+        public abstract string Value { get; }
+    }
+
+    public class PlayerValue<T> : PlayerValue
+    {
+        public override string Value => ParsedValue?.ToString() ?? string.Empty;
+        public T ParsedValue { get; set; }
     }
 }

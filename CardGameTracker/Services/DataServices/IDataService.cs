@@ -27,6 +27,10 @@ namespace CardGameTracker.Services.DataServices
         Task<IPlayer> GetPlayerAsync(int id);
         bool Insert(IRound round);
         Task<bool> InsertAsync(IRound round);
+        bool Insert(IRoundOption roundOption);
+        Task<bool> InsertAsync(IRoundOption roundOption);
+        bool Save(IRoundOption roundOption);
+        Task<bool> SaveAsync(IRoundOption roundOption);
         bool Save(IRound round);
         Task<bool> SaveAsync(IRound round);
         bool Save(IGame game);

@@ -15,7 +15,7 @@ namespace CardGameTracker.Models.Interface
         [JsonIgnore]
         IResultOption ResultOption { get; set; }
 
-        public object? ParsedValue { get; set; }
+        public object ParsedValue { get; set; }
     }
 
     public abstract class ResultBase

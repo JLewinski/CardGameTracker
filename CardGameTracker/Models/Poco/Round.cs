@@ -17,6 +17,17 @@ namespace CardGameTracker.Models.Poco
                 GameId = game.GameId;
             }
         }
+
         public IEnumerable<IRoundResult> RoundResults { get; set; }
+        public IEnumerable<IRoundOption> RoundOptions { get; set; }
+    }
+
+    public class RoundOptionPoco : IRoundOption
+    {
+        public int RoundId { get; set; }
+        public int RoundOptionId { get; set; }
+        public string Name { get; set; }
+        public string? Value { get; set; }
+        public IRound Round { get; set; }
     }
 }
