@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardGameTracker", "CardGameTracker\CardGameTracker.csproj", "{34E006B3-F0D2-417E-8E9B-EB0EA20ABF25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardGameTracker", "CardGameTracker\CardGameTracker.csproj", "{34E006B3-F0D2-417E-8E9B-EB0EA20ABF25}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CardGameTrackerDB", "CardGameTrackerDB\CardGameTrackerDB.sqlproj", "{8C941446-74ED-4D99-AB11-01EF11404891}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,12 @@ Global
 		{34E006B3-F0D2-417E-8E9B-EB0EA20ABF25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34E006B3-F0D2-417E-8E9B-EB0EA20ABF25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34E006B3-F0D2-417E-8E9B-EB0EA20ABF25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C941446-74ED-4D99-AB11-01EF11404891}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C941446-74ED-4D99-AB11-01EF11404891}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C941446-74ED-4D99-AB11-01EF11404891}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{8C941446-74ED-4D99-AB11-01EF11404891}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C941446-74ED-4D99-AB11-01EF11404891}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C941446-74ED-4D99-AB11-01EF11404891}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
