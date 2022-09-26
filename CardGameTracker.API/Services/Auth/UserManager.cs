@@ -1,15 +1,7 @@
 ﻿using CardGameTracker.API.Models.Auth;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
+using CardGameTracker.Services.DataServices;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Reflection.Metadata;
 using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace CardGameTracker.API.Services.Auth
 {
@@ -20,9 +12,9 @@ namespace CardGameTracker.API.Services.Auth
         private const int KeySize = 32; // 256 bit
         private const int Iterations = 10000;
 
-        public UserManager(string connectionString)
+        public UserManager(IConfiguration configuration)
         {
-            _connectionString = connectionString;
+            _connectionString = configuration.GetConnectionString("UserStore");
         }
 
         internal Task AddToRoleAsync(CardUser user, string role)
@@ -63,8 +55,7 @@ namespace CardGameTracker.API.Services.Auth
 
             if (parts.Length != 3)
             {
-                throw new FormatException("Unexpected hash format. " +
-                  "Should be formatted as `{iterations}.{salt}.{hash}`");
+                throw new FormatException("Unexpected hash format. Should be formatted as \"{iterations}.{salt}.{hash}\"");
             }
 
             var iterations = Convert.ToInt32(parts[0]);
@@ -108,17 +99,39 @@ namespace CardGameTracker.API.Services.Auth
 
         internal async Task<bool> CreateAsync(CardUser user, string password)
         {
+            user.UserId = Guid.NewGuid();
+
             var parameters = new
             {
                 user.UserName,
                 user.Email,
                 user.SecurityStamp,
-                password
+                password,
+                user.UserId
             };
 
             using (var conn = new SqlConnection(_connectionString))
             {
                 using (var command = conn.CreateStoredProcedure("CreateUser", parameters))
+                {
+                    await command.ExecuteNonQueryAsync();
+                }
+            }
+
+            return true;
+        }
+
+        internal async Task<bool> AttachUserAsync(CardUser user, int playerId)
+        {
+            var parameters = new
+            {
+                user.UserId,
+                playerId
+            };
+
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                using (var command = conn.CreateStoredProcedure("AttachUser", parameters))
                 {
                     await command.ExecuteNonQueryAsync();
                 }
@@ -133,7 +146,7 @@ namespace CardGameTracker.API.Services.Auth
 
             using (var conn = new SqlConnection(_connectionString))
             {
-                using (var command = conn.CreateStoredProcedure("CreateUser", new { username }))
+                using (var command = conn.CreateStoredProcedure("FindUserByName", new { username }))
                 {
                     using (var reader = await command.ExecuteReaderAsync())
                     {

@@ -47,6 +47,11 @@ namespace CardGameTracker.API.Controllers
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 };
 
+                foreach (var player in user.Players)
+                {
+                    authClaims.Add(new Claim("Player", player.PlayerId.ToString()));
+                }
+
                 foreach (var userRole in userRoles)
                 {
                     authClaims.Add(new Claim(ClaimTypes.Role, userRole));

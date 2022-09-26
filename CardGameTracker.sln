@@ -9,7 +9,7 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CardGameTrackerDB", "CardGa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardGameTracker.Mobile", "CardGameTracker.Mobile\CardGameTracker.Mobile.csproj", "{4CDF7093-AAEF-4229-8A9E-4B87CCDB9290}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardGameTracker.API", "CardGameTracker.API\CardGameTracker.API.csproj", "{11D825AF-B52D-490D-8A73-73DCC703280B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardGameTracker.API", "CardGameTracker.API\CardGameTracker.API.csproj", "{3949AB3D-981A-48DD-82DB-0FEE368F4A28}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +33,10 @@ Global
 		{4CDF7093-AAEF-4229-8A9E-4B87CCDB9290}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4CDF7093-AAEF-4229-8A9E-4B87CCDB9290}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4CDF7093-AAEF-4229-8A9E-4B87CCDB9290}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{11D825AF-B52D-490D-8A73-73DCC703280B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{11D825AF-B52D-490D-8A73-73DCC703280B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{11D825AF-B52D-490D-8A73-73DCC703280B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{11D825AF-B52D-490D-8A73-73DCC703280B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3949AB3D-981A-48DD-82DB-0FEE368F4A28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3949AB3D-981A-48DD-82DB-0FEE368F4A28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3949AB3D-981A-48DD-82DB-0FEE368F4A28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3949AB3D-981A-48DD-82DB-0FEE368F4A28}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

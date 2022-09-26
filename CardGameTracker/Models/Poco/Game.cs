@@ -1,6 +1,8 @@
 ﻿using CardGameTracker.Models.Interface;
+using CardGameTracker.Services.DataServices;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +11,18 @@ namespace CardGameTracker.Models.Poco
 {
     public class GamePoco : IGame
     {
+        public GamePoco() { }
+        public GamePoco(IDataReader reader)
+        {
+            GameId = reader.GetValue<int>(nameof(GameId));
+            Name = reader.GetValue<string>(nameof(Name));
+            Created = reader.GetValue<DateTime>(nameof(Created));
+            Updated = reader.GetValue<DateTime>(nameof(Updated));
+            Deleted = reader.GetValue<DateTime?>(nameof(Deleted));
+            IsFinished = reader.GetValue<bool>(nameof(IsFinished));
+
+        }
+
         public int GameId { get; set; }
         public string Name { get; set; }
         public DateTime Created { get; set; }
@@ -34,6 +48,14 @@ namespace CardGameTracker.Models.Poco
 
     public class GameDisplay
     {
+        public GameDisplay() { }
+        public GameDisplay(IDataReader reader)
+        {
+            GameId = reader.GetValue<int>(nameof(GameId));
+            Name = reader.GetValue<string>(nameof(Name));
+            Created = reader.GetValue<DateTime>(nameof(Created));   
+        }
+
         public int GameId { get; set; }
         public string Name { get; set; }
         public DateTime Created { get; set; }

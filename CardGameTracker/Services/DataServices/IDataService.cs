@@ -10,8 +10,9 @@ namespace CardGameTracker.Services.DataServices
 {
     public interface IDataService
     {
-        List<GameDisplay> GetGameList(int startIndex = 0, int endIndex = 0, string? name = null, bool? isFinished = null, DateTime? startDate = null, DateTime? endDate = null);
-        
+        List<GameDisplay> GetGameList(IEnumerable<int>? playerIds = null, int startIndex = 0, int endIndex = 0, string? name = null, bool? isFinished = null, DateTime? startDate = null, DateTime? endDate = null);
+        Task<List<GameDisplay>> GetGameListAsync(IEnumerable<int>? playerIds = null, int startIndex = 0, int endIndex = 0, string? name = null, bool? isFinished = null, DateTime? startDate = null, DateTime? endDate = null);
+
         /// <summary>
         /// Gets the game and all its players, rounds, options, etc
         /// </summary>
