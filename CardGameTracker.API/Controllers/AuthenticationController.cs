@@ -24,11 +24,13 @@ namespace CardGameTracker.API.Controllers
 
         public AuthenticationController(
             UserManager userManager,
+            RoleManager roleManager,
             IConfiguration configuration,
             ILogger<AuthenticationController> logger)
             : base(logger)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _configuration = configuration;
         }
 

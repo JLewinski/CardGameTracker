@@ -14,6 +14,11 @@ namespace CardGameTracker.Services.DataServices
     {
         private readonly string _connectionString;
 
+        public SqlDataService(string connectionString)
+        {
+            _connectionString = connectionString;
+        }
+
         public IGame GetGame(int id)
         {
             return GetGameAsync(id).Result;
