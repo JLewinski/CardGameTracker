@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardGameTracker.Maui", "Car
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardGameTracker", "CardGameTracker.Core\CardGameTracker.csproj", "{DAA9C4A3-B28E-442E-9B17-2E06122F094D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardGameTracker.WebBlazor", "CardGameTracker.WebBlazor\CardGameTracker.WebBlazor.csproj", "{6962A815-5982-4690-ABD0-EECF82A33ECC}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,5 +46,17 @@ Global
 		{DAA9C4A3-B28E-442E-9B17-2E06122F094D}.Release|x64.Build.0 = Release|Any CPU
 		{DAA9C4A3-B28E-442E-9B17-2E06122F094D}.Release|x86.ActiveCfg = Release|Any CPU
 		{DAA9C4A3-B28E-442E-9B17-2E06122F094D}.Release|x86.Build.0 = Release|Any CPU
+		{6962A815-5982-4690-ABD0-EECF82A33ECC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6962A815-5982-4690-ABD0-EECF82A33ECC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6962A815-5982-4690-ABD0-EECF82A33ECC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6962A815-5982-4690-ABD0-EECF82A33ECC}.Debug|x64.Build.0 = Debug|Any CPU
+		{6962A815-5982-4690-ABD0-EECF82A33ECC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6962A815-5982-4690-ABD0-EECF82A33ECC}.Debug|x86.Build.0 = Debug|Any CPU
+		{6962A815-5982-4690-ABD0-EECF82A33ECC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6962A815-5982-4690-ABD0-EECF82A33ECC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6962A815-5982-4690-ABD0-EECF82A33ECC}.Release|x64.ActiveCfg = Release|Any CPU
+		{6962A815-5982-4690-ABD0-EECF82A33ECC}.Release|x64.Build.0 = Release|Any CPU
+		{6962A815-5982-4690-ABD0-EECF82A33ECC}.Release|x86.ActiveCfg = Release|Any CPU
+		{6962A815-5982-4690-ABD0-EECF82A33ECC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
