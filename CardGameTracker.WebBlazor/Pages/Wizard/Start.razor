@@ -1,0 +1,76 @@
+@page "/wizard/start"
+
+<div class="card">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#players-tab" type="button"
+                    role="tab">Players</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#settings-tab" type="button"
+                    role="tab">Settings</button>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body">
+        <div class="tab-content">
+            <div id="players-tab" class="tab-pane fade show active" role="tabpanel">
+                <ul class="list-group mb-2">
+                    @foreach (var player in players)
+                    {
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-auto">
+                                    <p>@player.Name</p>
+                                </div>
+                                <div class="col-auto">
+                                    <button type="button" class="btn btn-danger"
+                                        @onclick="() => RemovePlayer(player)">Remove</button>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+                <div class="row">
+                    <div class="col-auto">
+                        <input class="form-control" type="text" @bind="newPlayerName" placeholder="New Player Name" />
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-primary" @onclick="AddPlayer">Add Player</button>
+                    </div>
+                </div>
+            </div>
+            <div id="settings-tab" class="tab-pane fade" role="tabpanel">
+                <p>Settings</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@code {
+    private List<Player> players = new();
+    private string? newPlayerName;
+
+    private void AddPlayer()
+    {
+        if (string.IsNullOrWhiteSpace(newPlayerName))
+            return;
+
+        if (players.Count == 6)
+        {
+            //Show error, too many players
+            return;
+        }
+
+        players.Add(new Player(newPlayerName));
+        newPlayerName = string.Empty;
+    }
+
+    private void RemovePlayer(Player player)
+    {
+        players.Remove(player);
+    }
+}
