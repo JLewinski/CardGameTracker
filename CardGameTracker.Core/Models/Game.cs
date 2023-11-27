@@ -1,10 +1,32 @@
 namespace CardGameTracker.Models;
 
-public class Game(List<Player> players, User user)
+public enum GameType
 {
-    public Guid UserId { get; set; } = user.Id;
-    public Guid Id { get; set; } = Guid.NewGuid();
-    public List<Player> Players { get; set; } = players;
-    
+    Wizard
+}
 
+public class Game
+{
+    public Game()
+    {
+        Players = [];
+        Id = Guid.NewGuid();
+    }
+    
+    public Game(List<Player> players, User user, GameType gameType)
+    {
+        UserId = user.Id;
+        Id = Guid.NewGuid();
+        Players = players;
+        GameType = gameType;
+    }
+
+    public Guid UserId { get; init; }
+    public Guid Id { get; init; } = Guid.NewGuid();
+    public List<Player> Players { get; init; }
+
+    public virtual GameType GameType { get; init; }
+
+    public DateTime CreatedDate { get; init; } = DateTime.Now;
+    public DateTime? LastModifiedDate { get; set; }
 }

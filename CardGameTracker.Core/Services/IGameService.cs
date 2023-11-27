@@ -2,11 +2,11 @@ using CardGameTracker.Models;
 
 namespace CardGameTracker.Services;
 
-public interface IGameService<T> where T : Game
+public interface IGameService
 {
-    Task<List<T>> GetGames(Guid userId);
-    Task<T> GetGame(Guid id);
-    Task<T> CreateGame(T game);
-    Task<T> UpdateGame(T game);
+    Task<List<T>> GetGames<T>(Guid userId) where T : Game;
+    Task<T> GetGame<T>(Guid id) where T : Game;
+    Task<Game> CreateGame(Game game);
+    Task<Game> UpdateGame(Game game);
     Task DeleteGame(Guid id);
 }

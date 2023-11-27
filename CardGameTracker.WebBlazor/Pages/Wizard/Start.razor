@@ -11,17 +11,24 @@
                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#settings-tab" type="button"
                     role="tab">Settings</button>
             </li>
+            @if (SavedGames.Count > 0)
+            {
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#load-tab" type="button"
+                        role="tab">Load</button>
+                </li>
+            }
         </ul>
     </div>
     <div class="card-body">
         <div class="tab-content">
             <div id="players-tab" class="tab-pane fade show active" role="tabpanel">
                 <ul class="list-group mb-2">
-                    @foreach (var player in players)
+                    @foreach (var player in game.Players)
                     {
                         <li class="list-group-item">
                             <div class="row">
-                                <div class="col-auto">
+                                <div class="col-2">
                                     <p>@player.Name</p>
                                 </div>
                                 <div class="col-auto">
@@ -32,45 +39,60 @@
                         </li>
                     }
                 </ul>
-                <div class="row">
-                    <div class="col-auto">
-                        <input class="form-control" type="text" @bind="newPlayerName" placeholder="New Player Name" />
-                    </div>
-                    <div class="col-auto">
-                        <button class="btn btn-primary" @onclick="AddPlayer">Add Player</button>
-                    </div>
-                </div>
+                @if (game.Players.Count < 6)
+                {
+                    <EditForm Model=createPlayer class="row" OnSubmit=AddPlayer>
+                        <div class="col-auto">
+                            <InputText class="form-control" @bind-Value=createPlayer.Name placeholder="New Player Name" />
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-primary" type="submit">Add Player</button>
+                        </div>
+                    </EditForm>
+                }
             </div>
             <div id="settings-tab" class="tab-pane fade" role="tabpanel">
                 <p>Settings</p>
+
+            </div>
+            <div id="load-tab" class="tab-pane fade" role="tabpanel">
+                <p>Load</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Created</th>
+                            <th>Updated</th>
+                            <th>Type</th>
+                            <th>Players</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var game in SavedGames)
+                        {
+                            var url = $"wizard/game/{game.Id}";
+                            <tr>
+                                <td>@game.CreatedDate</td>
+                                <td>@game.LastModifiedDate</td>
+                                <td>@game.GameType</td>
+                                <td>@game.Players.Count</td>
+                                <td>
+                                    <NavLink href="@url">
+                                        <span>Open</span>
+                                    </NavLink>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
             </div>
         </div>
+        @if (game.Players.Count >= 4)
+        {
+            <div class="mt-2">
+                <button class="btn btn-primary" @onclick="StartGame">Start Game</button>
+            </div>
+        }
     </div>
 </div>
-
-
-
-@code {
-    private List<Player> players = new();
-    private string? newPlayerName;
-
-    private void AddPlayer()
-    {
-        if (string.IsNullOrWhiteSpace(newPlayerName))
-            return;
-
-        if (players.Count == 6)
-        {
-            //Show error, too many players
-            return;
-        }
-
-        players.Add(new Player(newPlayerName));
-        newPlayerName = string.Empty;
-    }
-
-    private void RemovePlayer(Player player)
-    {
-        players.Remove(player);
-    }
-}

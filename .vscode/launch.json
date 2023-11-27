@@ -18,14 +18,18 @@
                 "--project",
                 "CardGameTracker.WebBlazor.csproj"
             ],
-            "preLaunchTask": "dotnet: build"
+            "preLaunchTask": "dotnet: build",
+            "launchBrowser": {
+                "enabled": false
+            }
         },
         {
             "name": "Attach",
             "type": "blazorwasm",
             "request": "attach",
             "cwd": "${workspaceFolder}/CardGameTracker.WebBlazor",
-            "timeout": 30000
+            "timeout": 100000,
+
         }
     ],
     "compounds": [

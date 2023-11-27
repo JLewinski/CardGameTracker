@@ -1,20 +1,61 @@
 using CardGameTracker.Models;
+using CardGameTracker.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
+
+namespace CardGameTracker.WebBlazor.Pages.Wizard;
 
 partial class Start : ComponentBase
 {
-    private readonly string[] _playerNames = new string[4];
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = null!;
 
     [Inject]
-    private NavigationManager NavigationManager { get; set; }
+    private IGameService GameService { get; set; } = null!;
 
-    private void StartGame()
+    private List<WizardGame> SavedGames { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
     {
-        var players = _playerNames
-            .Where(x => !string.IsNullOrWhiteSpace(x))
-            .Select(x => new Player(x))
-            .ToList();
+        SavedGames = await GameService.GetGames<WizardGame>(Guid.NewGuid());
+    }
 
-        NavigationManager.NavigateTo($"/wizard/game/{players.Count}/{string.Join(",", players.Select(x => x.Name))}");
+    public void StartGame()
+    {
+        GameService.CreateGame(game);
+        NavigationManager.NavigateTo($"/wizard/game/{game.Id}");
+    }
+
+    private WizardGame game = new();
+
+    private Player createPlayer = new(string.Empty);
+
+    
+    public void AddPlayer(EditContext editContext)
+    {
+        if (string.IsNullOrEmpty(createPlayer.Name)){
+            // editContext.
+            return;
+        }
+
+        if(game.Players.Any(p => p.Name == createPlayer.Name))
+        {
+            //Show error, player already exists
+            return;
+        }
+
+        if (game.Players.Count == 6)
+        {
+            //Show error, too many players
+            return;
+        }
+
+        game.Players.Add(new Player(createPlayer.Name));
+        createPlayer.Name = string.Empty;
+    }
+
+    private void RemovePlayer(Player player)
+    {
+        game.Players.Remove(player);
     }
 }
