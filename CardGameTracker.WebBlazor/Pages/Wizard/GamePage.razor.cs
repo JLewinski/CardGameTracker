@@ -12,7 +12,19 @@ partial class GamePage : ComponentBase
     private IGameService GameService { get; set; } = null!;
 
     private WizardGame Game { get; set; } = new();
-    
+
+    private string firstDealerText = string.Empty;
+
+    private void SetDealer()
+    {
+        if (string.IsNullOrEmpty(firstDealerText))
+        {
+            return;
+        }
+
+        Game.FirstDealer = firstDealerText;
+    }
+
     protected override async Task OnParametersSetAsync()
     {
         Game = await GameService.GetGame<WizardGame>(Id);

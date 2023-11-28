@@ -31,6 +31,11 @@ namespace CardGameTracker.Models
                     //Too many tricks taken
                     return;
                 }
+                else if (lastRound.Scores.Any(x => x.Value.TricksTaken == null))
+                {
+                    //Not players recorded
+                    return;
+                }
             }
 
             Rounds.Add(new Round(Rounds.Count, Players));
@@ -38,14 +43,24 @@ namespace CardGameTracker.Models
 
         public string GetCurrentDealer()
         {
+            if (string.IsNullOrEmpty(FirstDealer))
+            {
+                return string.Empty;
+            }
+
             var firstDealerIndex = Players.FindIndex(x => x.Name == FirstDealer);
-            var currentDealerIndex = (firstDealerIndex + Rounds.Count - 1) % Players.Count;
+            if (firstDealerIndex == -1)
+            {
+                return string.Empty;
+            }
+
+            var currentDealerIndex = (firstDealerIndex + Rounds.Count) % Players.Count;
             return Players[currentDealerIndex].Name;
         }
 
         public int GetScore(Player player)
         {
-            return Rounds.Count != 0 ? Rounds.Sum(x => x.Scores[player.Name].CalculatedScore) : 0;
+            return Rounds.Count != 0 ? Rounds.Sum(x => x.Scores[player.Name].CalculatedScore() ?? 0) : 0;
         }
     }
 }

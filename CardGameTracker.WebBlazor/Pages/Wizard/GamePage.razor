@@ -3,15 +3,14 @@
 @if (string.IsNullOrEmpty(Game.FirstDealer))
 {
     <h1>Select Dealer</h1>
-    <EditForm Model=Game>
-        <InputSelect @bind-Value=Game.FirstDealer class="form-control">
-            <option value="@string.Empty">Select Dealer</option>
-            @foreach (var player in Game.Players)
-            {
-                <option value="@player.Name">@player.Name</option>
-            }
-        </InputSelect>
-    </EditForm>
+    <InputSelect @bind-Value=firstDealerText class="form-control">
+        <option value="@string.Empty">Select Dealer</option>
+        @foreach (var player in Game.Players)
+        {
+            <option value="@player.Name">@player.Name</option>
+        }
+    </InputSelect>
+    <button @onclick="SetFirstDealer" class="btn btn-primary">Set Dealer</button>
 }
 else
 {
@@ -22,6 +21,9 @@ else
         <div class="row">
             <div class="col-auto">
                 <p>@player.Name</p>
+            </div>
+            <div class="col-auto">
+                <p>@Game.GetScore(player)</p>
             </div>
             @if(currentDealer == player.Name)
             {
