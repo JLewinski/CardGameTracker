@@ -14,8 +14,9 @@ partial class GamePage : ComponentBase
     private WizardGame Game { get; set; } = new();
 
     private string firstDealerText = string.Empty;
-
-    private void SetDealer()
+    private string currentDealer = string.Empty;
+    private int currentRound = 0;
+    private void SetFirstDealer()
     {
         if (string.IsNullOrEmpty(firstDealerText))
         {
@@ -23,10 +24,15 @@ partial class GamePage : ComponentBase
         }
 
         Game.FirstDealer = firstDealerText;
+        currentDealer = Game.FirstDealer;
+        currentRound = 1;
     }
 
     protected override async Task OnParametersSetAsync()
     {
         Game = await GameService.GetGame<WizardGame>(Id);
+        firstDealerText = Game.FirstDealer;
+        currentDealer = Game.GetCurrentDealer();
+        currentRound = Game.Rounds.Count;
     }
 }

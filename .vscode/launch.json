@@ -21,15 +21,14 @@
             "preLaunchTask": "dotnet: build",
             "launchBrowser": {
                 "enabled": false
-            }
+            },
         },
         {
             "name": "Attach",
             "type": "blazorwasm",
             "request": "attach",
             "cwd": "${workspaceFolder}/CardGameTracker.WebBlazor",
-            "timeout": 100000,
-
+            "timeout": 300000,
         }
     ],
     "compounds": [

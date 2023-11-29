@@ -14,22 +14,45 @@ public class Score
         TricksTaken = tricksTaken;
     }
 
-    public int Bid { get; set; }
-    public int? TricksTaken { get; set; }
-    public int? CalculatedScore()
+    private int _bid;
+    public int Bid
     {
+        get => _bid;
+        set
+        {
+            _bid = value;
+            CalculateScore();
+        }
+    }
+    private int? _tricksTaken;
+    public int? TricksTaken
+    {
+        get => _tricksTaken;
+        set
+        {
+            _tricksTaken = value;
+            CalculateScore();
+        }
+    }
+
+    public int? CalculateScore()
+    {
+
         if (TricksTaken == null)
         {
-            return null;
+            CalculatedScore = null;
         }
-
-        if (Bid == TricksTaken)
+        else if (Bid == TricksTaken)
         {
-            return 20 + Bid * 10;
+            CalculatedScore = 20 + Bid * 10;
         }
         else
         {
-            return Math.Abs(Bid - TricksTaken.Value) * -10;
+            CalculatedScore = Math.Abs(Bid - TricksTaken.Value) * -10;
         }
+
+        return CalculatedScore;
     }
+
+    public int? CalculatedScore { get; private set; }
 }

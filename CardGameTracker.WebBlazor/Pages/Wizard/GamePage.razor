@@ -14,10 +14,9 @@
 }
 else
 {
-    <h1>Players</h1>
+    <h1>Round @currentRound</h1>
     @foreach (var player in Game.Players)
     {
-        var currentDealer = Game.GetCurrentDealer();
         <div class="row">
             <div class="col-auto">
                 <p>@player.Name</p>
@@ -25,7 +24,7 @@ else
             <div class="col-auto">
                 <p>@Game.GetScore(player)</p>
             </div>
-            @if(currentDealer == player.Name)
+            @if (currentDealer == player.Name)
             {
                 <div class="col-auto">
                     <span class="badge badge-primary">Dealer</span>
@@ -33,4 +32,31 @@ else
             }
         </div>
     }
+    <table>
+        <thead>
+            <tr>
+                <th>Player</th>
+                <th>Is Dealer</th>
+                <th>Bid</th>
+                <th>Tricks</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var player in Game.Players)
+            {
+                <tr>
+                    <td>@player.Name</td>
+                    <td>@(player.Name == currentDealer ? "Yes" : "No")</td>
+                    <td>
+                        <InputNumber @bind-Value="Game.Rounds[currentRound - 1].Scores[player.Name].Bid" class="form-control"/>
+                    </td>
+                    <td>
+                        <InputNumber @bind-Value="Game.Rounds[currentRound - 1].Scores[player.Name].TricksTaken" class="form-control"/>
+                    </td>
+                    <td>@Game.Rounds[currentRound - 1].Scores[player.Name].CalculatedScore</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
