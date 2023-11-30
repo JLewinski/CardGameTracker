@@ -20,7 +20,14 @@ public class Score
         get => _bid;
         set
         {
-            _bid = value;
+            if (value < 0)
+            {
+                _bid = 0;
+            }
+            else
+            {
+                _bid = value;
+            }
             CalculateScore();
         }
     }
@@ -30,7 +37,14 @@ public class Score
         get => _tricksTaken;
         set
         {
-            _tricksTaken = value;
+            if (value < 0)
+            {
+                _tricksTaken = 0;
+            }
+            else
+            {
+                _tricksTaken = value;
+            }
             CalculateScore();
         }
     }

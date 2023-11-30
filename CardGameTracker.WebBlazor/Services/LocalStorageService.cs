@@ -53,7 +53,7 @@ public class LocalStorageService(ILocalStorageService localStorageService) : IGa
         return games;
     }
 
-    public async Task<Game> UpdateGame(Game game)
+    public async Task<T> UpdateGame<T>(T game) where T : Game
     {
         await _localStorageService.SetItemAsync(game.Id.ToString(), game);
         return game;

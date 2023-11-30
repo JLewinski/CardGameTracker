@@ -1,6 +1,10 @@
 @page "/wizard/game/{id:guid}"
 
-@if (string.IsNullOrEmpty(Game.FirstDealer))
+@if (isLoading)
+{
+    <h1>Loading...</h1>
+}
+else if (string.IsNullOrEmpty(Game.FirstDealer))
 {
     <h1>Select Dealer</h1>
     <InputSelect @bind-Value=firstDealerText class="form-control">
@@ -10,53 +14,92 @@
             <option value="@player.Name">@player.Name</option>
         }
     </InputSelect>
-    <button @onclick="SetFirstDealer" class="btn btn-primary">Set Dealer</button>
+    <button @onclick="SetFirstDealer" class="btn btn-primary mt-2">Set Dealer</button>
 }
 else
 {
-    <h1>Round @currentRound</h1>
-    @foreach (var player in Game.Players)
-    {
+    <div class="container">
         <div class="row">
             <div class="col-auto">
-                <p>@player.Name</p>
+                <h1>Score Board</h1>
+                @foreach (var player in Game.Players)
+                {
+                    <div class="row">
+                        <div class="col-auto">
+                            <p>@player.Name</p>
+                        </div>
+                        <div class="col-auto">
+                            <p>@Game.GetTotalScore(player)</p>
+                        </div>
+                        @if (Game.GetCurrentDealer() == player.Name)
+                        {
+                            <div class="col-auto">
+                                <span class="badge bg-primary">Dealer</span>
+                            </div>
+                        }
+                    </div>
+                }
             </div>
-            <div class="col-auto">
-                <p>@Game.GetScore(player)</p>
-            </div>
-            @if (currentDealer == player.Name)
-            {
-                <div class="col-auto">
-                    <span class="badge badge-primary">Dealer</span>
+            <div class="col gx-5">
+                <h1>Round @currentRound / @Game.NumTotalRounds</h1>
+                <div>
+                    <InputSelect @bind-Value="currentSuite" class="form-control">
+                        <option value="@string.Empty">Select Suite</option>
+                        <option value="Hearts">Hearts</option>
+                        <option value="Spades">Spades</option>
+                        <option value="Diamonds">Diamonds</option>
+                        <option value="Clubs">Clubs</option>
+                    </InputSelect>
                 </div>
-            }
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Player</th>
+                            <th></th>
+                            <th>Bid</th>
+                            <th>Tricks</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var player in Game.Players)
+                        {
+                            <tr>
+                                <td>@player.Name</td>
+                                <td>
+                                    @if (currentDealer == player.Name)
+                                    {
+                                        <span class="badge bg-primary">Dealer</span>
+                                    }
+                                </td>
+                                <td>
+                                    <InputNumber @bind-Value="Game.Rounds[currentRound - 1].Scores[player.Name].Bid"
+                                        class="form-control" tabindex="0" />
+                                </td>
+                                <td>
+                                    <InputNumber @bind-Value="Game.Rounds[currentRound - 1].Scores[player.Name].TricksTaken"
+                                        class="form-control" tabindex="-1" />
+                                </td>
+                                <td>@Game.Rounds[currentRound - 1].Scores[player.Name].CalculatedScore</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col"></div>
+                    <div class="col-auto">
+                        @if (currentRound > 1)
+                        {
+                            <button @onclick="PreviousRound" class="btn btn-primary m-2">Previous Round</button>
+                        }
+                        @if (Game.IsValidRound(currentRound))
+                        {
+                            <button @onclick="NextRound" class="btn btn-primary">Next Round</button>
+                        }
+                    </div>
+                    <div class="col"></div>
+                </div>
+            </div>
         </div>
-    }
-    <table>
-        <thead>
-            <tr>
-                <th>Player</th>
-                <th>Is Dealer</th>
-                <th>Bid</th>
-                <th>Tricks</th>
-                <th>Score</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var player in Game.Players)
-            {
-                <tr>
-                    <td>@player.Name</td>
-                    <td>@(player.Name == currentDealer ? "Yes" : "No")</td>
-                    <td>
-                        <InputNumber @bind-Value="Game.Rounds[currentRound - 1].Scores[player.Name].Bid" class="form-control"/>
-                    </td>
-                    <td>
-                        <InputNumber @bind-Value="Game.Rounds[currentRound - 1].Scores[player.Name].TricksTaken" class="form-control"/>
-                    </td>
-                    <td>@Game.Rounds[currentRound - 1].Scores[player.Name].CalculatedScore</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    </div>
 }

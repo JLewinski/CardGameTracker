@@ -20,25 +20,32 @@ partial class Start : ComponentBase
         SavedGames = await GameService.GetGames<WizardGame>(Guid.NewGuid());
     }
 
-    public void StartGame()
+    public async Task StartGame()
     {
-        GameService.CreateGame(game);
+        await GameService.CreateGame(game);
         NavigationManager.NavigateTo($"/wizard/game/{game.Id}");
     }
 
+    private void DeleteGame(WizardGame game)
+    {
+        GameService.DeleteGame(game.Id);
+        SavedGames.Remove(game);
+    }
+    
     private WizardGame game = new();
 
     private Player createPlayer = new(string.Empty);
 
-    
+
     public void AddPlayer(EditContext editContext)
     {
-        if (string.IsNullOrEmpty(createPlayer.Name)){
+        if (string.IsNullOrEmpty(createPlayer.Name))
+        {
             // editContext.
             return;
         }
 
-        if(game.Players.Any(p => p.Name == createPlayer.Name))
+        if (game.Players.Any(p => p.Name == createPlayer.Name))
         {
             //Show error, player already exists
             return;

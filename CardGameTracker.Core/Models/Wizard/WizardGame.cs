@@ -17,31 +17,49 @@ namespace CardGameTracker.Models
 
         public void AddRound()
         {
-            if (Rounds.Count != 0)
+            if (!IsValidRound(Rounds.Count))
             {
-                var lastRound = Rounds.Last();
-                var totalTricksTaken = lastRound.Scores.Sum(x => x.Value.TricksTaken);
-                if (totalTricksTaken < Rounds.Count)
-                {
-                    //Not enough tricks taken
-                    return;
-                }
-                else if (totalTricksTaken > Rounds.Count)
-                {
-                    //Too many tricks taken
-                    return;
-                }
-                else if (lastRound.Scores.Any(x => x.Value.TricksTaken == null))
-                {
-                    //Not players recorded
-                    return;
-                }
+                //Round is not valid
+                return;
+            }
+            else if (Rounds.Count == NumTotalRounds)
+            {
+                //Game is over
+                return;
             }
 
             Rounds.Add(new Round(Rounds.Count, Players));
         }
 
-        public string GetCurrentDealer()
+        public bool IsValidRound(int roundNumber)
+        {
+            if (roundNumber == 0)
+            {
+                return true;
+            }
+
+            var round = Rounds[roundNumber - 1];
+            var totalTricksTaken = round.Scores.Sum(x => x.Value.TricksTaken);
+            if (totalTricksTaken < roundNumber)
+            {
+                //Not enough tricks taken
+                return false;
+            }
+            else if (totalTricksTaken > roundNumber)
+            {
+                //Too many tricks taken
+                return false;
+            }
+            else if (round.Scores.Any(x => x.Value.TricksTaken == null))
+            {
+                //Not players recorded
+                return false;
+            }
+
+            return true;
+        }
+
+        public string GetDealer(int round)
         {
             if (string.IsNullOrEmpty(FirstDealer))
             {
@@ -54,13 +72,23 @@ namespace CardGameTracker.Models
                 return string.Empty;
             }
 
-            var currentDealerIndex = (firstDealerIndex + Rounds.Count) % Players.Count;
+            var currentDealerIndex = (firstDealerIndex + round - 1) % Players.Count;
             return Players[currentDealerIndex].Name;
         }
 
-        public int GetScore(Player player)
+        public string GetCurrentDealer()
         {
-            return Rounds.Count != 0 ? Rounds.Sum(x => x.Scores[player.Name].CalculatedScore() ?? 0) : 0;
+            return GetDealer(Rounds.Count);
+        }
+
+        public int GetTotalScore(Player player)
+        {
+            return Rounds.Count != 0 ? Rounds.Sum(x => x.Scores[player.Name].CalculateScore() ?? 0) : 0;
+        }
+
+        public Score GetScore(Player player)
+        {
+            return Rounds.Last().Scores[player.Name];
         }
     }
 }

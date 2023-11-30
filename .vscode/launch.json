@@ -16,27 +16,23 @@
                 "watch",
                 "run",
                 "--project",
-                "CardGameTracker.WebBlazor.csproj"
+                "CardGameTracker.WebBlazor.csproj",
+                "--verbose"
             ],
-            "preLaunchTask": "dotnet: build",
-            "launchBrowser": {
-                "enabled": false
-            },
+            "preLaunchTask": "dotnet: build"
         },
         {
             "name": "Attach",
             "type": "blazorwasm",
             "request": "attach",
             "cwd": "${workspaceFolder}/CardGameTracker.WebBlazor",
-            "timeout": 300000,
+            "timeout": 120000,
         }
     ],
     "compounds": [
         {
             "name": "Debug with Hot Reload",
-            "configurations": [
-                "Watch", "Attach"
-            ]
+            "configurations": [ "Attach", "Watch" ]
         }
     ]
 }

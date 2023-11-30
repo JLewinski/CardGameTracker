@@ -1,4 +1,5 @@
 using CardGameTracker.Models;
+using CardGameTracker.Models.Wizard;
 using CardGameTracker.Services;
 using Microsoft.AspNetCore.Components;
 
@@ -23,16 +24,65 @@ partial class GamePage : ComponentBase
             return;
         }
 
-        Game.FirstDealer = firstDealerText;
-        currentDealer = Game.FirstDealer;
         currentRound = 1;
+        currentDealer = firstDealerText;
+        Game.AddRound();
+        Game.FirstDealer = firstDealerText;
+
+        GameService.UpdateGame(Game);
     }
+
+    private bool isLoading = true;
+
+    private string currentSuite;
 
     protected override async Task OnParametersSetAsync()
     {
         Game = await GameService.GetGame<WizardGame>(Id);
-        firstDealerText = Game.FirstDealer;
-        currentDealer = Game.GetCurrentDealer();
         currentRound = Game.Rounds.Count;
+        UpdateFields();
+        isLoading = false;
+    }
+
+    private void UpdateFields()
+    {
+        currentDealer = Game.GetDealer(currentRound);
+    }
+
+    private void PreviousRound()
+    {
+        if (currentRound == 0)
+        {
+            return;
+        }
+        currentRound--;
+        UpdateFields();
+    }
+
+    private void NextRound()
+    {
+        if (!Game.IsValidRound(currentRound))
+        {
+            //TODO: Show error
+            return;
+        }
+
+        if (currentRound == Game.Rounds.Count)
+        {
+            Game.AddRound();
+            currentRound = Game.Rounds.Count;
+        }
+        else if (currentRound < Game.Rounds.Count)
+        {
+            currentRound++;
+        }
+        else if (currentRound > Game.Rounds.Count)
+        {
+            currentRound = Game.Rounds.Count;
+        }
+
+        UpdateFields();
+
+        GameService.UpdateGame(Game);
     }
 }

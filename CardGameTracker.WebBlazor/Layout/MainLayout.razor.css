@@ -1,3 +1,8 @@
+:root {
+    --smallMinWidth: 641px;
+    --smallMaxWidth: 640.98px;
+}
+
 .page {
     position: relative;
     display: flex;
@@ -36,7 +41,7 @@ main {
         text-overflow: ellipsis;
     }
 
-@media (max-width: 640.98px) {
+@media (max-width: 1499.98px) {
     .top-row {
         justify-content: space-between;
     }
@@ -46,7 +51,7 @@ main {
     }
 }
 
-@media (min-width: 641px) {
+@media (min-width: 1500px) {
     .page {
         flex-direction: row;
     }

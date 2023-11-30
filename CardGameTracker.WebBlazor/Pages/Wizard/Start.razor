@@ -57,13 +57,14 @@
             </div>
             <div id="load-tab" class="tab-pane fade" role="tabpanel">
                 <p>Load</p>
-                <table>
+                <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>Created</th>
                             <th>Updated</th>
                             <th>Type</th>
                             <th>Players</th>
+                            <th></th>
                             <th></th>
                         </tr>
                     </thead>
@@ -77,9 +78,12 @@
                                 <td>@game.GameType</td>
                                 <td>@game.Players.Count</td>
                                 <td>
-                                    <NavLink href="@url">
+                                    <NavLink class="btn btn-primary" href="@url">
                                         <span>Open</span>
                                     </NavLink>
+                                </td>
+                                <td>
+                                    <button class="btn btn-danger" @onclick="() => DeleteGame(game)">Delete</button>
                                 </td>
                             </tr>
                         }
