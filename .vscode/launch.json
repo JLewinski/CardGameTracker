@@ -17,7 +17,8 @@
                 "run",
                 "--project",
                 "CardGameTracker.WebBlazor.csproj",
-                "--verbose"
+                "--verbose",
+                "--non-interactive"
             ],
             "preLaunchTask": "dotnet: build"
         },

@@ -31,15 +31,9 @@ namespace CardGameTracker.Models
             Rounds.Add(new Round(Rounds.Count, Players));
         }
 
-        public bool IsValidRound(int roundNumber)
+        public bool HasValidTricks(int roundNumber)
         {
-            if (roundNumber == 0)
-            {
-                return true;
-            }
-
-            var round = Rounds[roundNumber - 1];
-            var totalTricksTaken = round.Scores.Sum(x => x.Value.TricksTaken);
+            var totalTricksTaken = Rounds[roundNumber - 1].Scores.Sum(x => x.Value.TricksTaken);
             if (totalTricksTaken < roundNumber)
             {
                 //Not enough tricks taken
@@ -50,7 +44,21 @@ namespace CardGameTracker.Models
                 //Too many tricks taken
                 return false;
             }
-            else if (round.Scores.Any(x => x.Value.TricksTaken == null))
+            return true;
+        }
+
+        public bool IsValidRound(int roundNumber)
+        {
+            if (roundNumber == 0)
+            {
+                return true;
+            }
+
+            if (!HasValidTricks(roundNumber))
+            {
+                return false;
+            }
+            else if (Rounds[roundNumber - 1].Scores.Any(x => x.Value.TricksTaken == null))
             {
                 //Not players recorded
                 return false;
