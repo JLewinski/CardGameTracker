@@ -28,4 +28,8 @@ public class Round
 
     public int Number { get; init; }
     public Dictionary<string, Score> Scores { get; init; } = new();
+    public bool IsComplete()
+    {
+        return Scores.Sum(x => x.Value.TricksTaken ?? 0) == Number;
+    }
 }

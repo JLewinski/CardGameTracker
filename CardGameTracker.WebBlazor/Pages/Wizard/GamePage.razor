@@ -20,25 +20,25 @@ else
 {
     <div class="container">
         <div class="row">
-            <div class="col-auto">
-                <h1>Score Board</h1>
-                @foreach (var player in Game.Players)
-                {
-                    <div class="row">
-                        <div class="col-auto">
-                            <p>@player.Name</p>
-                        </div>
-                        <div class="col-auto">
-                            <p>@Game.GetTotalScore(player)</p>
-                        </div>
-                        @if (Game.GetCurrentDealer() == player.Name)
+            <div class="col-md-3 order-1 order-md-0">
+                <h1 class="text-center">Score Board</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="text-center">Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var player in Game.Players)
                         {
-                            <div class="col-auto">
-                                <span class="badge bg-primary">Dealer</span>
-                            </div>
+                            <tr>
+                                <td>@player.Name</td>
+                                <td class="text-center"><span class="badge bg-@(Game.IsWinning(player) ? "success" : Game.GetTotalScore(player) < 0 ? "danger" : "primary")">@Game.GetTotalScore(player)</span></td>
+                            </tr>
                         }
-                    </div>
-                }
+                    </tbody>
+                </table>
             </div>
             <div class="col gx-5">
                 <h1><span class="bi bi-suit-@Game.Rounds[currentRound - 1].Trump.ToString().ToLower().TrimEnd('s')"></span> Round @currentRound / @Game.NumTotalRounds</h1>
@@ -58,7 +58,7 @@ else
                             <th></th>
                             <th>Bid</th>
                             <th>Tricks</th>
-                            <th>Score</th>
+                            <th class="text-center">Score</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -74,15 +74,22 @@ else
                                 </td>
                                 <td>
                                     <InputNumber @bind-Value="Game.Rounds[currentRound - 1].Scores[player.Name].Bid"
-                                        class="form-control" tabindex="0" />
+                                        class="form-control" tabindex="1" />
                                 </td>
                                 <td>
                                     <InputNumber @bind-Value="Game.Rounds[currentRound - 1].Scores[player.Name].TricksTaken"
-                                        class="form-control" tabindex="-1" />
+                                        class="form-control" tabindex="2" />
                                 </td>
-                                <td>@Game.Rounds[currentRound - 1].Scores[player.Name].CalculatedScore</td>
+                                <td class="text-center">@Game.Rounds[currentRound - 1].Scores[player.Name].CalculatedScore</td>
                             </tr>
                         }
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td class="text-center"><small>@Game.Rounds[currentRound - 1].Scores.Sum(x => x.Value.Bid) / @currentRound</small></td>
+                            <td class="text-center"><small class="@(Game.HasValidTricks(currentRound) ? "text-success" : "text-danger")">@Game.GetTotalTricks(currentRound)</small></td>
+                            <td></td>
+                        </tr>
                     </tbody>
                 </table>
                 <div class="row">
