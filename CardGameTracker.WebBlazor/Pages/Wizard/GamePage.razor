@@ -41,14 +41,14 @@ else
                 }
             </div>
             <div class="col gx-5">
-                <h1>Round @currentRound / @Game.NumTotalRounds</h1>
+                <h1><span class="bi bi-suit-@Game.Rounds[currentRound - 1].Trump.ToString().ToLower().TrimEnd('s')"></span> Round @currentRound / @Game.NumTotalRounds</h1>
                 <div>
-                    <InputSelect @bind-Value="currentSuite" class="form-control">
+                    <InputSelect @bind-Value="Game.Rounds[currentRound - 1].Trump" class="form-control">
                         <option value="@string.Empty">Select Suite</option>
-                        <option value="Hearts">Hearts</option>
-                        <option value="Spades">Spades</option>
-                        <option value="Diamonds">Diamonds</option>
-                        <option value="Clubs">Clubs</option>
+                        @foreach(var trump in Enum.GetValues<Models.Wizard.Trump>())
+                        {
+                            <option value="@trump">@trump.GetDescription()</option>
+                        }
                     </InputSelect>
                 </div>
                 <table class="table">

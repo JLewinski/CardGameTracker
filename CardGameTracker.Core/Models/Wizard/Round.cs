@@ -1,4 +1,16 @@
+using System.ComponentModel;
+
 namespace CardGameTracker.Models.Wizard;
+
+public enum Trump
+{
+    Spades,
+    Hearts,
+    Diamonds,
+    Clubs,
+    [Description("No Trump")]
+    NoTrump
+}
 
 public class Round
 {
@@ -11,6 +23,8 @@ public class Round
             Scores.Add(player.Name, new Score());
         }
     }
+
+    public Trump Trump { get; set; } = Trump.NoTrump;
 
     public int Number { get; init; }
     public Dictionary<string, Score> Scores { get; init; } = new();
