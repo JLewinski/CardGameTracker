@@ -63,6 +63,7 @@
                             <th>Created</th>
                             <th>Updated</th>
                             <th>Type</th>
+                            <th>Round</th>
                             <th>Players</th>
                             <th></th>
                             <th></th>
@@ -76,6 +77,7 @@
                                 <td>@game.CreatedDate</td>
                                 <td>@game.LastModifiedDate</td>
                                 <td>@game.GameType</td>
+                                <td>@game.Rounds.Count / @game.NumTotalRounds</td>
                                 <td>@game.Players.Count</td>
                                 <td>
                                     <NavLink class="btn btn-primary" href="@url">

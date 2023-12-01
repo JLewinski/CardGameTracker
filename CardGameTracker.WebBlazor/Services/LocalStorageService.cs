@@ -50,11 +50,12 @@ public class LocalStorageService(ILocalStorageService localStorageService) : IGa
             games.Add(await GetGame<T>(id));
         }
 
-        return games;
+        return games.OrderByDescending(x => x.CreatedDate).ToList();
     }
 
     public async Task<T> UpdateGame<T>(T game) where T : Game
     {
+        game.LastModifiedDate = DateTime.Now;
         await _localStorageService.SetItemAsync(game.Id.ToString(), game);
         return game;
     }

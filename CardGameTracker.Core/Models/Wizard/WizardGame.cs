@@ -89,6 +89,11 @@ namespace CardGameTracker.Models
             return GetDealer(Rounds.Count);
         }
 
+        public int GetTotalTricks(int roundNumber)
+        {
+            return Rounds[roundNumber - 1].Scores.Sum(x => x.Value.TricksTaken ?? 0);
+        }
+
         public int GetTotalScore(Player player)
         {
             return Rounds.Count != 0 ? Rounds.Sum(x => x.Scores[player.Name].CalculateScore() ?? 0) : 0;
@@ -97,6 +102,18 @@ namespace CardGameTracker.Models
         public Score GetScore(Player player)
         {
             return Rounds.Last().Scores[player.Name];
+        }
+
+        public bool IsWinning(Player player)
+        {
+            var maxScore = Players.Max(x => GetTotalScore(x));
+            return GetTotalScore(player) == maxScore;
+        }
+
+        public bool IsLowest(Player player)
+        {
+            var minScore = Players.Min(x => GetTotalScore(x));
+            return GetTotalScore(player) == minScore;
         }
     }
 }

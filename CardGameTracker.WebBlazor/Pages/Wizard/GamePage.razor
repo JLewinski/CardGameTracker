@@ -20,13 +20,13 @@ else
 {
     <div class="container">
         <div class="row">
-            <div class="col-auto">
+            <div class="col-md-3 order-1 order-md-0">
                 <h1 class="text-center">Score Board</h1>
                 <table class="table">
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Score</th>
+                            <th class="text-center">Score</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,13 +34,13 @@ else
                         {
                             <tr>
                                 <td>@player.Name</td>
-                                <td>@Game.GetTotalScore(player)</td>
+                                <td class="text-center"><span class="badge bg-@(Game.IsWinning(player) ? "success" : Game.GetTotalScore(player) < 0 ? "danger" : "primary")">@Game.GetTotalScore(player)</span></td>
                             </tr>
                         }
                     </tbody>
                 </table>
             </div>
-            <div class="col gx-5">
+            <div class="col-md-9 gx-5">
                 <h1 class="text-center">Round @currentRound / @Game.NumTotalRounds</h1>
                 <div>
                     <InputSelect @bind-Value="currentSuite" class="form-control">
@@ -58,7 +58,7 @@ else
                             <th></th>
                             <th>Bid</th>
                             <th>Tricks</th>
-                            <th>Score</th>
+                            <th class="text-center">Score</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -80,14 +80,14 @@ else
                                     <InputNumber @bind-Value="Game.Rounds[currentRound - 1].Scores[player.Name].TricksTaken"
                                         class="form-control" tabindex="2" />
                                 </td>
-                                <td>@Game.Rounds[currentRound - 1].Scores[player.Name].CalculatedScore</td>
+                                <td class="text-center">@Game.Rounds[currentRound - 1].Scores[player.Name].CalculatedScore</td>
                             </tr>
                         }
                         <tr>
                             <td></td>
                             <td></td>
-                            <td><small>@Game.Rounds[currentRound - 1].Scores.Sum(x => x.Value.Bid)</small></td>
-                            <td><small class="@(Game.HasValidTricks(currentRound) ? "text-success" : "text-danger")">@Game.Rounds[currentRound - 1].Scores.Sum(x => x.Value.TricksTaken)</small></td>
+                            <td class="text-center"><small>@Game.Rounds[currentRound - 1].Scores.Sum(x => x.Value.Bid) / @currentRound</small></td>
+                            <td class="text-center"><small class="@(Game.HasValidTricks(currentRound) ? "text-success" : "text-danger")">@Game.GetTotalTricks(currentRound)</small></td>
                             <td></td>
                         </tr>
                     </tbody>
