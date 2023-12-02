@@ -25,6 +25,9 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
+      - name: Install WASM Tools
+        run: dotnet workload install wasm-tools
+
       - name: Publish app
         run: dotnet publish -c Release
 
