@@ -34,8 +34,6 @@ partial class GamePage : ComponentBase
 
     private bool isLoading = true;
 
-    private string currentSuite;
-
     protected override async Task OnParametersSetAsync()
     {
         Game = await GameService.GetGame<WizardGame>(Id);
