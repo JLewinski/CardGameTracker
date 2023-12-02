@@ -23,7 +23,7 @@ partial class Start : ComponentBase
     public async Task StartGame()
     {
         await GameService.CreateGame(game);
-        NavigationManager.NavigateTo($"/wizard/game/{game.Id}");
+        NavigationManager.NavigateTo($"wizard/game/{game.Id}");
     }
 
     private void DeleteGame(WizardGame game)

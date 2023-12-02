@@ -43,8 +43,15 @@ public class LocalStorageService(ILocalStorageService localStorageService) : IGa
 
     public async Task<List<T>> GetGames<T>(Guid userId) where T : Game
     {
-        var ids = await _localStorageService.GetItemAsync<List<Guid>>("gameIds");
         List<T> games = [];
+        var hasKeys = await _localStorageService.ContainKeyAsync("gameIds");
+        
+        if (!hasKeys)
+        {
+            return games;
+        }
+
+        var ids = await _localStorageService.GetItemAsync<List<Guid>>("gameIds");
         foreach (var id in ids)
         {
             games.Add(await GetGame<T>(id));
