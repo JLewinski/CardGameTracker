@@ -57,41 +57,42 @@
             </div>
             <div id="load-tab" class="tab-pane fade" role="tabpanel">
                 <p>Load</p>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Created</th>
-                            <th>Updated</th>
-                            <th>Type</th>
-                            <th>Round</th>
-                            <th>Players</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var game in SavedGames)
-                        {
-                            var url = $"wizard/game/{game.Id}";
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
                             <tr>
-                                <td>@game.CreatedDate</td>
-                                <td>@game.LastModifiedDate</td>
-                                <td>@game.GameType</td>
-                                <td>@game.Rounds.Count / @game.NumTotalRounds</td>
-                                <td>@game.Players.Count</td>
-                                <td>
-                                    <NavLink class="btn btn-primary" href="@url">
-                                        <span>Open</span>
-                                    </NavLink>
-                                </td>
-                                <td>
-                                    <button class="btn btn-danger" @onclick="() => DeleteGame(game)">Delete</button>
-                                </td>
+                                <th></th>
+                                <th>Created</th>
+                                <th>Updated</th>
+                                @* <th>Type</th> *@
+                                <th>Round</th>
+                                <th>Players</th>
+                                <th></th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-
+                        </thead>
+                        <tbody>
+                            @foreach (var game in SavedGames)
+                            {
+                                var url = $"wizard/game/{game.Id}";
+                                <tr>
+                                    <td>
+                                        <NavLink class="btn btn-primary" href="@url">
+                                            <span>Open</span>
+                                        </NavLink>
+                                    </td>
+                                    <td>@game.CreatedDate</td>
+                                    <td>@game.LastModifiedDate</td>
+                                    @* <td>@game.GameType</td> *@
+                                    <td>@game.Rounds.Count / @game.NumTotalRounds</td>
+                                    <td>@game.Players.Count</td>
+                                    <td>
+                                        <button class="btn btn-danger" @onclick="() => DeleteGame(game)">Delete</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         @if (game.Players.Count >= 4)
