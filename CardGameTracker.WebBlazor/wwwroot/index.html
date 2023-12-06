@@ -62,9 +62,15 @@
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
     <script>
-        if (localStorage.getItem('lightMode')){
-            document.querySelector('html').setAttribute('data-bs-theme', 'light')
+        function changeTheme(theme) {
+            if (!theme) {
+                theme = localStorage.getItem('theme') ?? 'dark';
+                
+            }
+            console.log(theme);
+            document.querySelector('html').setAttribute('data-bs-theme', theme);
         }
+        changeTheme();
     </script>
 </body>
 
