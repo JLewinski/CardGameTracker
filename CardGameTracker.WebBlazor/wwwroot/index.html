@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 
 <head>
     <meta charset="utf-8" />
@@ -61,6 +61,11 @@
         <a class="dismiss">🗙</a>
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
+    <script>
+        if (localStorage.getItem('lightMode')){
+            document.querySelector('html').setAttribute('data-bs-theme', 'light')
+        }
+    </script>
 </body>
 
 </html>
