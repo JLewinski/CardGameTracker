@@ -1,14 +1,13 @@
 interface IScore {
     Bid: number;
     TricksTaken?: number;
-    CalculateScore(): number;
 }
 
 class Score implements IScore {
 
     constructor(score?: IScore) {
         this.Bid = score?.Bid ?? 0;
-        this.TricksTaken = score?.TricksTaken ?? 0;
+        this.TricksTaken = score?.TricksTaken;
     }
 
     Bid: number;

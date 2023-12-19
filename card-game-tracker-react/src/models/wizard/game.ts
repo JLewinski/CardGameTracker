@@ -1,9 +1,12 @@
 import { Game, GameType } from "../game";
 import { Player } from "../player";
 import Round, { IRound } from "./round";
+import { v4 as uuid } from 'uuid';
 
 interface IWizardGame extends Game {
-    Rounds: Round[];
+    Rounds: IRound[];
+    FirstDealer?: number;
+    GetDealer(roundNumber: number): Player | undefined;
 }
 
 class WizardGame implements IWizardGame {
@@ -11,7 +14,7 @@ class WizardGame implements IWizardGame {
     constructor(game: IWizardGame | string) {
         if (typeof game === 'string') {
             this.UserId = game;
-            this.Id = crypto.randomUUID();
+            this.Id = uuid();
             this.Players = [];
             this.CreatedDate = new Date();
             this.Rounds = [];
@@ -21,7 +24,7 @@ class WizardGame implements IWizardGame {
             this.Players = game.Players;
             this.CreatedDate = game.CreatedDate;
             this.LastModifiedDate = game.LastModifiedDate;
-            this.Rounds = game.Rounds;
+            this.Rounds = game.Rounds.map(x => new Round(x));
         }
     }
 
@@ -52,35 +55,38 @@ class WizardGame implements IWizardGame {
     }
 
     public getTotalTricks(roundNumber: number) {
-        let scores = this.Rounds[roundNumber - 1].Scores;
-        return Object.values(scores).reduce((sum, score) => sum + (score.TricksTaken ?? 0), 0);
+        let round = this.Rounds[roundNumber - 1];
+        return round.getTotalTricks();
     }
 
     CurrentRound: number = 0;
 
     public AddRound() {
-        if(!this.IsValidRound(this.CurrentRound)){
+        if(this.CurrentRound > 0 && !this.Rounds[this.CurrentRound - 1].isValid()){
             //TODO: Show error message
-            return;
+            return null;
         }
 
-        this.Rounds.push(new Round(this.CurrentRound + 1, this.Players.map(p => p.Name)));
-        this.CurrentRound++;
+        this.Rounds.push(new Round(this.CurrentRound + 1, this.Players));
+        return this.Rounds[this.CurrentRound++];
     }
 
-    FirstDealer: number = 0;
+    FirstDealer: number | undefined = undefined;
 
     public GetDealer(roundNumber: number) {
-        let index = (roundNumber + this.FirstDealer) % this.Players.length;
+        if (this.FirstDealer === undefined) {
+            return undefined;
+        }
+        let index = (roundNumber + this.FirstDealer - 1) % this.Players.length;
         return this.Players[index];
     }
 
     public GetTotalScore(player: Player) {
-        return this.Rounds.map(round => round.Scores[player.Name].CalculateScore()).reduce((sum, score) => sum + score, 0);
+        return this.Rounds.map(round => round.Scores[player.Id].CalculateScore()).reduce((sum, score) => sum + score, 0);
     }
 
     public GetScore(player: Player, roundNumber: number){
-        return this.Rounds[roundNumber - 1].Scores[player.Name].CalculateScore();
+        return this.Rounds[roundNumber - 1].Scores[player.Id].CalculateScore();
     }
 
     public IsWinner(player: Player){
@@ -95,3 +101,4 @@ class WizardGame implements IWizardGame {
 }
 
 export default WizardGame;
+export type { IWizardGame };
