@@ -27,7 +27,7 @@ jobs:
 
       - name: Build app
         run: |
-          cd card-game-tracker
+          cd card-game-tracker-react
           npm install
           npm run build
           cd ..
