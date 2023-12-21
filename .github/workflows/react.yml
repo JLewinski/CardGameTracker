@@ -2,13 +2,13 @@
 
 name: Create React App
 env:
-  PUBLISH_DIR: card-game-tracker/build
+  PUBLISH_DIR: card-game-tracker-react/build
 
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "react" ]
+    branches: [ "main" ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -27,19 +27,15 @@ jobs:
 
       - name: Build app
         run: |
-          cd card-game-tracker
+          cd card-game-tracker-react
           npm install
           npm run build
-          cd ..
-
-      - name: Publish app
-        run: npm run build
 
       - name: GitHub Pages
         if: success()
         uses: crazy-max/ghaction-github-pages@v1.5.1
         with:
-          target_branch: gh-pages-dev
+          target_branch: gh-pages
           build_dir: ${{ env.PUBLISH_DIR }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
