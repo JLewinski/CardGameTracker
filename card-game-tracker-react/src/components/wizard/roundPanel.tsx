@@ -12,7 +12,7 @@ const PlayerRound: React.FC<{ game: WizardGame, player: Player }> = ({ game, pla
     const round = game.CurrentRound as Round;
     const score = round.Scores[player.Id];
     return <tr>
-        <td className={game.CurrentDealer == player ? 'text-success' : ''}>{player.Name}</td>
+        <td className={game.CurrentDealer === player ? 'text-success' : ''}>{player.Name}</td>
         <td><input disabled={round.isValid} title="bid" type="number" min={0} max={round.Number} value={round.Scores[player.Id].Bid} className="form-control" tabIndex={3} onChange={e => round.Scores[player.Id].Bid = e.target.valueAsNumber} /></td>
         <td><input disabled={game.IsFinished} title="tricks" type="number" min={0} max={round.Number} value={round.Scores[player.Id].TricksTaken ?? ''} className="form-control" tabIndex={4} onChange={e => round.Scores[player.Id].TricksTaken = e.target.valueAsNumber} /></td>
         <td className="text-center">{score.ComputedScore}</td>
