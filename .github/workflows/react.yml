@@ -2,7 +2,7 @@
 
 name: Create React App
 env:
-  PUBLISH_DIR: build
+  PUBLISH_DIR: card-game-tracker-react/build
 
 # Controls when the workflow will run
 on:
