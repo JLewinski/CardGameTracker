@@ -55,6 +55,9 @@ class WizardGame {
     private currentRound = computed(() => this.CurrentRoundNumber > 0 ? this.Rounds[this.CurrentRoundNumber - 1] : undefined);
     get CurrentRound() { return this.currentRound.value; }
 
+    private currentDealer = computed(() => this.GetDealer(this.CurrentRoundNumber));
+    get CurrentDealer() { return this.currentDealer.value; }
+
     FirstDealer?: number;
 
     public IsValidRound(roundNumber: number) {
@@ -114,6 +117,12 @@ class WizardGame {
     public GetScore(player: Player, roundNumber: number) {
         return this.Rounds[roundNumber - 1].Scores[player.Id].ComputedScore;
     }
+
+    private maxScore = computed(() => Math.max(...this.Players.map(p => this.GetTotalScore(p))));
+    get MaxScore() { return this.maxScore.value; }
+
+    private minScore = computed(() => Math.min(...this.Players.map(p => this.GetTotalScore(p))));
+    get MinScore() { return this.minScore.value; }
 
     public IsWinner(player: Player) {
         let maxScore = Math.max(...this.Players.map(p => this.GetTotalScore(p)));

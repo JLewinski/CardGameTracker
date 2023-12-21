@@ -52,7 +52,7 @@ const Game: React.FC<{}> = () => {
             <DealerPanel game={game} />
         }
         {game != null && isPlaying &&
-            <div className="card">
+            <div className="card m-0 mt-sm-5">
                 <div className="card-header">
                     <ul className="nav nav-tabs card-header-tabs" role="tablist">
                         <li className="nav-item" role="presentation">

@@ -22,7 +22,6 @@ function Start() {
     useEffect(() => {
         const loadGames = async () => {
             const games = await saveService.loadAll<IWizardGameData>('Wizard');
-            debugger;
             setSavedGames(games);
         };
 
@@ -46,7 +45,7 @@ function Start() {
             const { player } = params;
             return <li className="list-group-item">
                 <div className="row">
-                    <div className="col-2">
+                    <div className="col-2-md col">
                         <p>{player.Name}</p>
                     </div>
                     <div className="col-auto">

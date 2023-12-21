@@ -35,43 +35,67 @@ const ScoreBoard: React.FC<{ game: WizardGame }> = ({ game }) => {
         const score = round.Scores[player.Id];
         let className = useComputed(() => round.Scores[player.Id].Bid === round.Scores[player.Id].TricksTaken ? "text-success" : "text-danger")
         return <div className={className.value}>
-            {score.ComputedScore}({score.Bid} / {score.TricksTaken})
+            {score.ComputedScore} <sup>{score.TricksTaken}</sup>/<sub>{score.Bid}</sub>
         </div>
+    }
+
+    const PlayerName: React.FC<{ player: Player, game: WizardGame }> = ({ player, game }) => {
+        const totalScore = useComputed(() => game.GetTotalScore(player));
+        const isWinner = useComputed(() => totalScore.value === game.MaxScore);
+        const isLowest = useComputed(() => totalScore.value === game.MinScore);
+
+        const className = useComputed(() => isWinner.value ? "text-success" : isLowest.value ? "text-danger" : "");
+        return <th className={className.value}>{player.Name}</th>
+    }
+
+    const PlayerTotalScore: React.FC<{ player: Player, game: WizardGame }> = ({ player, game }) => {
+
+        const totalScore = useComputed(() => game.GetTotalScore(player));
+        const isWinner = useComputed(() => totalScore.value === game.MaxScore);
+        const isLowest = useComputed(() => totalScore.value === game.MinScore);
+
+        const className = useComputed(() => isWinner.value ? "text-success" : isLowest.value ? "text-danger" : "");
+
+        return <td className={className.value}>{game.GetTotalScore(player)}</td>
     }
 
     const RoundScores: React.FC<{ roundNumber: number }> = ({ roundNumber: roundIndex }) => {
         var maxRounds = useSignal(0);
         effect(() => {
-            if (game.CurrentRoundNumber > maxRounds.value){
+            if (game.CurrentRoundNumber > maxRounds.value) {
                 maxRounds.value = game.CurrentRoundNumber - 1;
             }
-            if (game.IsFinished){
+            if (game.IsFinished) {
                 maxRounds.value = game.CurrentRoundNumber;
             }
         });
         return <tr>
-            <td>Round {roundIndex + 1}</td>
+            <td><small>{roundIndex + 1}</small></td>
             {roundIndex < maxRounds.value && game.Players.map(player => <td key={player.Id} className="text-center"><PlayerRoundScore player={player} round={game.Rounds[roundIndex]} /></td>)}
             {roundIndex >= maxRounds.value && game.Players.map(player => <td key={player.Id} className="text-center"> - </td>)}
         </tr>
     };
 
+
+
     const Full = (
-        <table className="table">
-            <thead>
-                <tr>
-                    <th>Names</th>
-                    {game.Players.map(player => <th key={player.Id} className="text-center">{player.Name}</th>)}
-                </tr>
-            </thead>
-            <tbody>
-                {numberArray.map(i => <RoundScores key={i} roundNumber={i} />)}
-                <tr>
-                    <td>Total</td>
-                    {game.Players.map(player => <td key={player.Id} className="text-center">{game.GetTotalScore(player)}</td>)}
-                </tr>
-            </tbody>
-        </table>
+        <div className="table-responsive h-auto">
+            <table className="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        {game.Players.map(player => <PlayerName key={player.Id} player={player} game={game} />)}
+                    </tr>
+                </thead>
+                <tbody>
+                    {numberArray.map(i => <RoundScores key={i} roundNumber={i} />)}
+                    <tr className="table-primary text-center">
+                        <td></td>
+                        {game.Players.map(player => <PlayerTotalScore key={player.Id} player={player} game={game} />)}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     );
 
     return <div>
