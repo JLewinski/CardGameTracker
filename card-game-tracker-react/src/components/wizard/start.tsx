@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from "react";
-import { IWizardGame } from "../../models/wizard/game";
+import { IWizardGameData } from "../../models/wizard/game";
 import { ISaveService } from "../../services/ISaveService";
 import { NavLink, useNavigate } from "react-router-dom";
 import { SaveServiceContext } from "../../App";
 import { v4 as uuid } from 'uuid';
 import { Player } from "../../models/player";
+import { signal, useSignal } from "@preact/signals-react";
+import { useSignals } from "@preact/signals-react/runtime";
 
 
 function Start() {
@@ -12,17 +14,32 @@ function Start() {
     const saveService = useContext<ISaveService>(SaveServiceContext);
     const navigate = useNavigate();
 
+    const playerName = signal('');
+    const players = signal<Player[]>([]);
+
+    const [savedGames, setSavedGames] = useState<IWizardGameData[]>([]);
+
+    useEffect(() => {
+        const loadGames = async () => {
+            const games = await saveService.loadAll<IWizardGameData>('Wizard');
+            debugger;
+            setSavedGames(games);
+        };
+
+        loadGames();
+    }, [saveService]);
+
+
     function PlayerList() {
-        const [players, setPlayers] = useState<Player[]>([]);
-        const [playerName, setPlayerName] = useState<string>('');
+        useSignals();
 
         function removePlayer(player: Player) {
-            setPlayers(players.filter(p => p != player));
+            players.value = players.value.filter(p => p !== player);
         }
 
         function addPlayer() {
-            players.push({ Name: playerName, Id: uuid() });
-            setPlayerName('');
+            players.value = [...players.value, { Name: playerName.peek(), Id: uuid() }];
+            playerName.value = '';
         }
 
         function PlayerItem(params: { player: Player }) {
@@ -41,15 +58,14 @@ function Start() {
         }
 
         function startGame() {
-            const game: IWizardGame = {
+            const game: IWizardGameData = {
                 Id: uuid(),
                 UserId: uuid(),
                 CreatedDate: new Date(),
                 LastModifiedDate: new Date(),
                 GameType: 'Wizard',
-                Players: players,
+                Players: players.value,
                 Rounds: [],
-                GetDealer: (round: number) => undefined
             };
 
             saveService.save(game);
@@ -58,13 +74,13 @@ function Start() {
 
         return <div>
             <ul className="list-group mb-2">
-                {players.map(player => <PlayerItem player={player} />)}
+                {players.value.map(player => <PlayerItem key={player.Id} player={player} />)}
             </ul>
             {
-                players.length < 6 &&
+                players.value.length < 6 &&
                 <form className="row" onSubmit={e => { e.preventDefault(); addPlayer(); }}>
                     <div className="col-auto">
-                        <input className="form-control" type="text" placeholder="Player Name" value={playerName} onChange={e => setPlayerName(e.target.value)} />
+                        <input className="form-control" type="text" placeholder="Player Name" value={playerName.value} onChange={e => playerName.value = (e.target.value)} />
                     </div>
                     <div className="col-auto">
                         <button type="submit" className="btn btn-primary">Add</button>
@@ -72,7 +88,7 @@ function Start() {
                 </form>
             }
             {
-                players.length >= 4 && players.length <= 6 &&
+                players.value.length >= 4 && players.value.length <= 6 &&
                 <button type="button" className="btn btn-primary mt-2" onClick={startGame}>Start Game</button>
             }
         </div>
@@ -82,24 +98,13 @@ function Start() {
         return <div>Coming Soon</div>
     }
 
-    const [savedGames, setSavedGames] = useState<IWizardGame[]>([]);
-
-    useEffect(() => {
-        const loadGames = async () => {
-            const games = await saveService.loadAll<IWizardGame>('Wizard');
-            setSavedGames(games);
-        };
-
-        loadGames();
-    }, [saveService]);
-
     function LoadedGames() {
-        async function DeleteGame(game: IWizardGame) {
+        async function DeleteGame(game: IWizardGameData) {
             await saveService.delete(game.Id);
-            setSavedGames(savedGames.filter(g => g.Id != game.Id));
+            setSavedGames(savedGames.filter(g => g.Id !== game.Id));
         }
 
-        function LoadedGame(params: { game: IWizardGame }) {
+        function LoadedGame(params: { game: IWizardGameData }) {
             const { game } = params;
 
             return <tr>
@@ -123,17 +128,17 @@ function Start() {
             <table className="table table-striped">
                 <thead>
                     <tr>
-                        <th></th>
+                        <th aria-label="open button"></th>
                         <th>Created</th>
                         <th>Updated</th>
                         <th>Type</th>
                         <th>Round</th>
                         <th>Players</th>
-                        <th></th>
+                        <th aria-label="delete button"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {savedGames.map(game => <LoadedGame game={game} />)}
+                    {savedGames.map(game => <LoadedGame key={game.Id} game={game} />)}
                 </tbody>
             </table>
         </div >

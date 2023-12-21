@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 export default function NavMenu() {
 
-    const [IsThemeOn, setTheme] = useState(localStorage.getItem('theme') == 'light');
+    const [IsThemeOn, setTheme] = useState(localStorage.getItem('theme') === 'light');
   
   
     if (IsThemeOn) {
@@ -18,7 +18,7 @@ export default function NavMenu() {
   
       document.querySelector('html')?.setAttribute('data-bs-theme', theme);
       localStorage.setItem('theme', theme);
-      setTheme(theme == 'light');
+      setTheme(theme === 'light');
     }
   
     return (
