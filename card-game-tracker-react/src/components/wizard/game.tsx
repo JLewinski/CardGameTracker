@@ -17,18 +17,21 @@ const Game: React.FC<{}> = () => {
             const loadedGameData = await saveService.load<IWizardGameData>(id);
             const wizardGame = new WizardGame(loadedGameData);
             setGame(wizardGame);
+            setIsPlaying(wizardGame.CurrentRound !== undefined);
         };
 
         loadGame();
     }, [saveService, id]);
 
     const [game, setGame] = useState<WizardGame | null>(null);
+    const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
     function setFirstDealer() {
         if (game?.FirstDealer === undefined) return;
 
         game.AddRound();
         saveService.save(game);
+        setIsPlaying(true);
     }
 
     const DealerPanel: React.FC<{ game: WizardGame }> = ({ game }) => {
@@ -42,12 +45,13 @@ const Game: React.FC<{}> = () => {
         </div>
     }
 
+
     return <div className="container">
         {game == null && <h1>Loading...</h1>}
-        {game != null && game.CurrentRound === undefined &&
+        {game != null && !isPlaying &&
             <DealerPanel game={game} />
         }
-        {game?.CurrentRound !== undefined &&
+        {game != null && isPlaying &&
             <div className="card">
                 <div className="card-header">
                     <ul className="nav nav-tabs card-header-tabs" role="tablist">
