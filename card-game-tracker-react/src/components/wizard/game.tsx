@@ -6,8 +6,6 @@ import WizardGame, { IWizardGameData } from "../../models/wizard/game";
 import ScoreBoard from "./scoreBoard";
 import RoundPanel from "./roundPanel";
 
-type gameProps = { game: WizardGame };
-
 const Game: React.FC<{}> = () => {
     const saveService = useContext<ISaveService>(SaveServiceContext);
     const { id } = useParams<{ id: string }>();
