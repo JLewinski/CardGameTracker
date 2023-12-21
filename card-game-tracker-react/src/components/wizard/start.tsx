@@ -112,10 +112,10 @@ function Start() {
                         <span>Open</span>
                     </NavLink>
                 </td>
-                <td>{game.CreatedDate.toString()}</td>
-                <td>{game.LastModifiedDate?.toString()}</td>
+                <td>{new Date(game.CreatedDate).toLocaleDateString()}</td>
+                <td>{game.LastModifiedDate ? new Date(game.LastModifiedDate).toLocaleDateString() : ''}</td>
                 <td>{game.GameType}</td>
-                <td>{game.Rounds.length / (60 / game.Players.length)}</td>
+                <td>{game.Rounds.length} / {(60 / game.Players.length)}</td>
                 <td>{game.Players.length}</td>
                 <td>
                     <button type="button" className="btn btn-danger" onClick={() => DeleteGame(game)}>Delete</button>
