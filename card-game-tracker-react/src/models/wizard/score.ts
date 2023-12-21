@@ -1,4 +1,4 @@
-import { computed, effect, signal } from "@preact/signals-react";
+import { computed, signal } from "@preact/signals-react";
 
 interface IScoreData {
     bid: number;

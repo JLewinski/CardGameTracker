@@ -1,12 +1,9 @@
-import React, { FunctionComponent, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ISaveService } from "../../services/ISaveService";
 import { SaveServiceContext } from "../../App";
 import WizardGame, { IWizardGameData } from "../../models/wizard/game";
-import { Player } from "../../models/player";
 import ScoreBoard from "./scoreBoard";
-import Round, { Suit } from "../../models/wizard/round";
-import { useSignal, useSignals } from "@preact/signals-react/runtime";
 import RoundPanel from "./roundPanel";
 
 type gameProps = { game: WizardGame };
@@ -25,7 +22,7 @@ const Game: React.FC<{}> = () => {
         };
 
         loadGame();
-    }, [saveService]);
+    }, [saveService, id]);
 
     const [game, setGame] = useState<WizardGame | null>(null);
 

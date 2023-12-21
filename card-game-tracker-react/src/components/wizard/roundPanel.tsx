@@ -35,8 +35,8 @@ const RoundHeader: React.FC<{ game: WizardGame }> = ({ game }) => {
     useSignals();
     const round = game.CurrentRound as Round;
     var suitClass = useComputed(() => {
-        if (game.CurrentRound?.Suit == undefined) return 'bi';
-        if (game.CurrentRound?.Suit == 'No Trump') return 'bi bi-slash-circle';
+        if (game.CurrentRound?.Suit === undefined) return 'bi';
+        if (game.CurrentRound?.Suit === 'No Trump') return 'bi bi-slash-circle';
         let suitName = game.CurrentRound.Suit.toLocaleLowerCase();
         suitName = suitName.substring(0, suitName.length - 1);
 
@@ -44,7 +44,7 @@ const RoundHeader: React.FC<{ game: WizardGame }> = ({ game }) => {
     });
     return <>
         <h1>
-            {round.Suit != undefined && <span className={suitClass.value}></span>}
+            {round.Suit !== undefined && <span className={suitClass.value}></span>}
             {!round.Suit?.length && <span className="text-danger">SELECT SUIT</span>}
             <span className="ms-2">Round {round.Number} / {game.GetTotalRounds()}</span>
         </h1>
@@ -69,8 +69,8 @@ const RoundButtons: React.FC<{ game: WizardGame }> = ({ game }) => {
             {round.Number > 1 &&
                 <button type="button" onClick={e => game.CurrentRoundNumber -= 1} className="btn btn-primary m-2" tabIndex={4}>Previous Round</button>
             }
-            {round.isValid && !(round.Number == game.GetTotalRounds() && game.IsFinished) &&
-                <button type="button" onClick={() => { game.AddRound(); saveService.save(game); }} className="btn btn-primary" tabIndex={3}>{round.Number == game.GetTotalRounds() ? 'Finish Game' : 'Next Round'}</button>
+            {round.isValid && !(round.Number === game.GetTotalRounds() && game.IsFinished) &&
+                <button type="button" onClick={() => { game.AddRound(); saveService.save(game); }} className="btn btn-primary" tabIndex={3}>{round.Number === game.GetTotalRounds() ? 'Finish Game' : 'Next Round'}</button>
             }
         </div>
         <div className="col"></div>

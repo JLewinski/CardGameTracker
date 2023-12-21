@@ -10,7 +10,6 @@ import LocalStorageSaveService from './services/localStorage';
 import NavMenu from './components/layout/navMenu';
 import { ISaveService } from './services/ISaveService';
 import Game from './components/wizard/game';
-import { effect, signal } from '@preact/signals-react';
 
 // Create a context for the save service
 

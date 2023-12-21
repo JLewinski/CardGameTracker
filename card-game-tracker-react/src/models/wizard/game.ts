@@ -87,7 +87,7 @@ class WizardGame {
         }
 
         if (this.CurrentRoundNumber < this.GetTotalRounds()) {
-            if (this.CurrentRoundNumber == this.Rounds.length) {
+            if (this.CurrentRoundNumber === this.Rounds.length) {
                 this.Rounds.push(new Round(this.CurrentRoundNumber + 1, this.Players));
             }
             this.CurrentRoundNumber++;

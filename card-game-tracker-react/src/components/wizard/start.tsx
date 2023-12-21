@@ -5,7 +5,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { SaveServiceContext } from "../../App";
 import { v4 as uuid } from 'uuid';
 import { Player } from "../../models/player";
-import { signal, useSignal } from "@preact/signals-react";
+import { signal } from "@preact/signals-react";
 import { useSignals } from "@preact/signals-react/runtime";
 
 

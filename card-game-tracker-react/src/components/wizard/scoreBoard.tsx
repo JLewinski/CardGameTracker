@@ -33,7 +33,7 @@ const ScoreBoard: React.FC<{ game: WizardGame }> = ({ game }) => {
 
     const PlayerRoundScore: React.FC<{ player: Player, round: Round }> = ({ player, round }) => {
         const score = round.Scores[player.Id];
-        let className = useComputed(() => round.Scores[player.Id].Bid == round.Scores[player.Id].TricksTaken ? "text-success" : "text-danger")
+        let className = useComputed(() => round.Scores[player.Id].Bid === round.Scores[player.Id].TricksTaken ? "text-success" : "text-danger")
         return <div className={className.value}>
             {score.ComputedScore}({score.Bid} / {score.TricksTaken})
         </div>
