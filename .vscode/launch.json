@@ -28,6 +28,14 @@
             "request": "attach",
             "cwd": "${workspaceFolder}/CardGameTracker.WebBlazor",
             "timeout": 120000,
+        },
+        {
+            "name": "Debug Raact",
+            "type": "msedge",
+            "request": "launch",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}/card-game-tracker-react/src",
+            "preLaunchTask": "npm: start",
         }
     ],
     "compounds": [

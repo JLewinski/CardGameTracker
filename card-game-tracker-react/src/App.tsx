@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
@@ -21,15 +21,9 @@ function App() {
         <main>
           <article>
             <Routes>
-              <Route path="/" element={<div>
-                <h1>Home</h1>
-              </div>}>
+              <Route path="/" element={<div><h1>Home</h1><NavLink className="btn btn-primary" to="/wizard/start/">Wizard</NavLink></div>}>
               </Route>
-            </Routes>
-            <Routes>
               <Route path="/wizard/start/" element={<Start />} />
-            </Routes>
-            <Routes>
               <Route path="/wizard/game/:id" element={<Game />} />
             </Routes>
           </article>

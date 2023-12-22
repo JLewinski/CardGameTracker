@@ -9,6 +9,34 @@
 			],
 			"group": "build",
 			"label": "dotnet: build"
+		},
+		{
+			"type": "npm",
+			"script": "start",
+			"group": "none",
+			"isBackground": true,
+			"options": {
+				"cwd": "${workspaceFolder}/card-game-tracker-react"
+			},
+			"problemMatcher": {
+				"owner": "custom",   // This is not needed but, required by the problemMatcher Object
+				"pattern": {
+				  "regexp": "^$"     // This is not needed but, required by the problemMatcher Object
+				},
+				"background": {
+				  "activeOnStart": true,
+				  "beginsPattern": "Compiling...",  // Signals the begin of the Task
+				  "endsPattern": "Compiled .*"      // Signals that now the initialization of the task is complete
+				}
+			 }
+		},
+		{
+			"type": "npm",
+			"script": "test",
+			"group": "test",
+			"options": {
+				"cwd": "${workspaceFolder}/card-game-tracker-react"
+			}
 		}
 	]
 }
