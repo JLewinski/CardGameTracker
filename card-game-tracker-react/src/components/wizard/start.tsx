@@ -11,6 +11,9 @@ import { useSignals } from "@preact/signals-react/runtime";
 
 function Start() {
 
+    const userId = localStorage.getItem('userId') ?? uuid();
+    localStorage.setItem('userId', userId);
+
     const saveService = useContext<ISaveService>(SaveServiceContext);
     const navigate = useNavigate();
 
@@ -59,7 +62,7 @@ function Start() {
         function startGame() {
             const game: IWizardGameData = {
                 Id: uuid(),
-                UserId: uuid(),
+                UserId: userId,
                 CreatedDate: new Date(),
                 LastModifiedDate: new Date(),
                 GameType: 'Wizard',
